@@ -126,6 +126,28 @@ document.addEventListener('DOMContentLoaded', ()=> {
         freeze();
     }
 
+    //Controls functions
+
+    function control(e){
+        //ROTATE
+        if(e.key === 'ArrowUp'){
+            rotate();
+        }
+        //MOVE LEFT
+        if(e.key === 'ArrowLeft'){
+            moveLeft();
+        }
+        //MOVE RIGHT
+        if(e.key === 'ArrowRight'){
+            moveRight();
+        }
+        //MOVE DOWN
+        if(e.key === 'ArrowDown'){
+            moveDown();
+        }
+
+    }
+
 
     //freeze function, this function stops currently going tetrimino when it meets the bottom or another tetrimino, create new tetrimino and make it go down
 
@@ -134,15 +156,17 @@ document.addEventListener('DOMContentLoaded', ()=> {
             //if there are tetrimino a square under our all currently going tetriminos squares
             current.forEach( index => squares[currentPosition + index].classList.add('taken'));
             //start a new tetrimino
+            randomTetrimino=nextRandomTetrimino;
             nextRandomTetrimino = Math.floor(Math.random()* theTetriminos.length);
-            current = theTetriminos[nextRandomTetrimino][currentRotation];
+            current = theTetriminos[randomTetrimino][currentRotation];
             currentPosition = 3;
             //draw a tetrimino
             draw();
         }
     }
 
-    //move the tetrimino left until it reaches the left game border
+    //FUNCTIONS FOR MOVING LEFT, RIGHT AND DOWN
+    //function that move the tetrimino left until it reaches the left game border
 
     function moveLeft(){
         undraw();
@@ -157,6 +181,33 @@ document.addEventListener('DOMContentLoaded', ()=> {
         draw();
     }
 
+    //function that move the tetrimino right until it reaches the right game border
 
+    function moveRight(){
+        undraw();
+        const isAtRightEdge = current.some(index => (currentPosition + index) % width === width-1);
+        //when a tetrimino reaches left edge move one box to the right
+        if(!isAtRightEdge) {currentPosition +=1;}
+
+        if(current.some(index => squares[currentPosition + index].classList.contains('taken'))){
+            currentPosition -=1;
+        }
+        //draw a tetrimino
+        draw();
+    }
+
+    //function that rotate tetrimino
+    function rotate(){
+        undraw();
+        currentRotation++;
+        if(currentRotation === current.length){ //if we reached the 4th rotation come back to first one
+            currentRotation = 0;
+        }
+        current = theTetriminos[randomTetrimino][currentRotation];
+        draw();
+    }
+
+    // EVENT LISTENER FOR PRESSING KEYS
+    document.addEventListener('keydown', control);
 
 });
