@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', ()=> {
     //selecting DOM elements
     const body = document.getElementById('body');
     const layout = document.getElementById('layout');
+    const miniLayout = document.getElementById('mini-layout');
     const grid = document.querySelector('.grid');
     const score = document.getElementById('score');
     const startBtn = document.getElementById('start-btn');
@@ -68,7 +69,7 @@ document.addEventListener('DOMContentLoaded', ()=> {
 
     const theTetriminos = [lTetrimino, jTetrimino, sTetrimino, zTetrimino, tTetrimino, oTetrimino, iTetrimino];
 
-    //Create basic visual game structure
+    //CREATE BASIC VISUAL GAME STRUCTURE
     //Append 200 game background DIVS
     for(let i = 0; i<200; i++){
         divForOneBox = document.createElement('div');
@@ -82,18 +83,21 @@ document.addEventListener('DOMContentLoaded', ()=> {
         layout.appendChild(divForOneBox);
         // console.log('One box');
     }
+    //Append mini grid
+    for(let i = 0; i<16; i++){
+        divForOneBox = document.createElement('div');
+        miniLayout.appendChild(divForOneBox);
+    }
 
     //create all squares array after they are append to DOM
     const squares = Array.from(document.querySelectorAll('.grid div'));
     console.log(squares);
 
-    //Game
-
+    //GAME
 
     //randomly select a tetromino
     let randomTetrimino = Math.floor(Math.random()*theTetriminos.length);
     console.log(randomTetrimino);
-
     let currentPosition = 3;
     let currentRotation = 0;
     let current = theTetriminos[randomTetrimino][currentRotation];
@@ -156,12 +160,13 @@ document.addEventListener('DOMContentLoaded', ()=> {
             //if there are tetrimino a square under our all currently going tetriminos squares
             current.forEach( index => squares[currentPosition + index].classList.add('taken'));
             //start a new tetrimino
-            randomTetrimino=nextRandomTetrimino;
+            randomTetrimino = nextRandomTetrimino;
             nextRandomTetrimino = Math.floor(Math.random()* theTetriminos.length);
             current = theTetriminos[randomTetrimino][currentRotation];
             currentPosition = 3;
             //draw a tetrimino
             draw();
+            displayNext();
         }
     }
 
@@ -205,6 +210,33 @@ document.addEventListener('DOMContentLoaded', ()=> {
         }
         current = theTetriminos[randomTetrimino][currentRotation];
         draw();
+    }
+
+    //show coming up tetrimino
+    const displaySquares = document.querySelectorAll('.mini-grid div');
+    const displayWidth = 4;
+    let displayIndex = 0;
+
+    const nextTetriminos = [
+        [displayWidth, displayWidth+1, displayWidth+2,displayWidth*2+2], //l
+        [displayWidth*2, displayWidth*2+1, displayWidth*2+2, displayWidth+2], //j
+        [displayWidth+1, displayWidth+2, displayWidth*2, displayWidth*2+1], //z
+        [displayWidth, displayWidth+1, displayWidth*2+1, displayWidth*2+2],//s
+        [displayWidth, displayWidth+1, displayWidth+2, displayWidth*2+1],//t
+        [displayWidth, displayWidth+1, displayWidth*2, displayWidth*2+1],//o
+        [displayWidth, displayWidth+1, displayWidth+2, displayWidth+3]//i
+    ];
+
+    //display next tetriminos
+
+    function displayNext() {
+        //remove tetrimino class from squares in the grid
+        displaySquares.forEach(square => {
+            square.classList.remove('tetrimino');
+        });
+        nextTetriminos[nextRandomTetrimino].forEach(index=> {
+            displaySquares[displayIndex + index].classList.add('tetrimino');
+        });
     }
 
     // EVENT LISTENER FOR PRESSING KEYS
