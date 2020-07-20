@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', ()=> {
     let box;
     let divForOneBox;
     const width = 10;
+    let nextRandomTetrimino = 0;
 
 
     //selecting DOM elements
@@ -68,9 +69,16 @@ document.addEventListener('DOMContentLoaded', ()=> {
     const theTetriminos = [lTetrimino, jTetrimino, sTetrimino, zTetrimino, tTetrimino, oTetrimino, iTetrimino];
 
     //Create basic visual game structure
-    //Append 200 DIVS
+    //Append 200 game background DIVS
     for(let i = 0; i<200; i++){
         divForOneBox = document.createElement('div');
+        layout.appendChild(divForOneBox);
+        // console.log('One box');
+    }
+    //Append 10 divs to create game bottom border
+    for(let i = 0; i<10; i++){
+        divForOneBox = document.createElement('div');
+        divForOneBox.classList.add('taken');
         layout.appendChild(divForOneBox);
         // console.log('One box');
     }
@@ -83,7 +91,7 @@ document.addEventListener('DOMContentLoaded', ()=> {
 
 
     //randomly select a tetromino
-    const randomTetrimino = Math.floor(Math.random()*theTetriminos.length);
+    let randomTetrimino = Math.floor(Math.random()*theTetriminos.length);
     console.log(randomTetrimino);
 
     let currentPosition = 3;
@@ -93,30 +101,49 @@ document.addEventListener('DOMContentLoaded', ()=> {
 
     //Draw the tetrimino
 
-    const draw = () => {
+    function draw(){
         current.forEach( index => {
             squares[currentPosition + index].classList.add('tetrimino');
         });
-    };
+    }
 
     //Undrow the tetrimino
 
-    const undrow = () => {
+    function undraw(){
         current.forEach( index => {
             squares[currentPosition + index].classList.remove('tetrimino');
         });
-    };
+    }
 
-    //move the tetrimino down every one second
+    //move the tetrimino down every one second, freeze it when it reaches taken spot
 
     const timerId = setInterval(moveDown, 1000);
 
-    const moveDown = () => {
-        undrow();
+    function moveDown(){
+        undraw();
         currentPosition += width;
         draw();
-    };
+        freeze();
+    }
 
-    draw();
+
+    //freeze function, this function stops currently going tetrimino when it meets the bottom or another tetrimino, create new tetrimino and make it go down
+
+    function freeze(){
+        if(current.some(index => squares[currentPosition + index + width].classList.contains('taken'))){ //checking if the logic is true to some items in an array
+            //if there are tetrimino a square under our all currently going tetriminos squares
+            current.forEach( index => squares[currentPosition + index].classList.add('taken'));
+            //start a new tetrimino
+            nextRandomTetrimino = Math.floor(Math.random()* theTetriminos.length);
+            current = theTetriminos[nextRandomTetrimino][currentRotation];
+            currentPosition = 3;
+            draw();
+        }
+    }
+
+    //move the tetrimino left until it reaches the left game border
+
+
+
 
 });
