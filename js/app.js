@@ -137,12 +137,25 @@ document.addEventListener('DOMContentLoaded', ()=> {
             nextRandomTetrimino = Math.floor(Math.random()* theTetriminos.length);
             current = theTetriminos[nextRandomTetrimino][currentRotation];
             currentPosition = 3;
+            //draw a tetrimino
             draw();
         }
     }
 
     //move the tetrimino left until it reaches the left game border
 
+    function moveLeft(){
+        undraw();
+        const isAtLeftEdge = current.some(index => (currentPosition + index) % width === 0);
+        //when a tetrimino reaches left edge move one box to the right
+        if(!isAtLeftEdge) {currentPosition -=1;}
+
+        if(current.some(index => squares[currentPosition + index].classList.contains('taken'))){
+            currentPosition +=1;
+        }
+        //draw a tetrimino
+        draw();
+    }
 
 
 
