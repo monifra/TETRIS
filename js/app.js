@@ -81,18 +81,40 @@ document.addEventListener('DOMContentLoaded', ()=> {
 
     //Game
 
-    let currentPosition = 1;
-    let current = theTetriminos[0][0];
 
     //randomly select a tetromino
     const randomTetrimino = Math.floor(Math.random()*theTetriminos.length);
     console.log(randomTetrimino);
-    //Draw the first rotation in the first tetromino
+
+    let currentPosition = 3;
+    let currentRotation = 0;
+    let current = theTetriminos[randomTetrimino][currentRotation];
+
+
+    //Draw the tetrimino
 
     const draw = () => {
         current.forEach( index => {
             squares[currentPosition + index].classList.add('tetrimino');
         });
+    };
+
+    //Undrow the tetrimino
+
+    const undrow = () => {
+        current.forEach( index => {
+            squares[currentPosition + index].classList.remove('tetrimino');
+        });
+    };
+
+    //move the tetrimino down every one second
+
+    const timerId = setInterval(moveDown, 1000);
+
+    const moveDown = () => {
+        undrow();
+        currentPosition += width;
+        draw();
     };
 
     draw();
