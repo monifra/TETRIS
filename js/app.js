@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', ()=> {
     let divForOneBox;
     const width = 10;
     let nextRandomTetrimino = 0;
+    let timerId = 0;
 
 
     //selecting DOM elements
@@ -121,7 +122,7 @@ document.addEventListener('DOMContentLoaded', ()=> {
 
     //move the tetrimino down every one second, freeze it when it reaches taken spot
 
-    const timerId = setInterval(moveDown, 1000);
+    //timerId = setInterval(moveDown, 1000);
 
     function moveDown(){
         undraw();
@@ -238,6 +239,21 @@ document.addEventListener('DOMContentLoaded', ()=> {
             displaySquares[displayIndex + index].classList.add('tetrimino');
         });
     }
+
+    //function that adds functionality to start/stop button
+    startBtn.addEventListener('click', () => {
+        if(timerId){
+            clearInterval(timerId);
+            timerId = null;
+            startBtn.textContent = 'START';
+        } else {
+            draw();
+            timerId = setInterval(moveDown, 1000);
+            nextRandomTetrimino = Math.floor(Math.random()* theTetriminos.length);
+            displayNext();
+            startBtn.textContent = 'STOP';
+        }
+    });
 
     // EVENT LISTENER FOR PRESSING KEYS
     document.addEventListener('keydown', control);

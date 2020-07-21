@@ -11,3 +11,8 @@ More changes:
 ### TO DO: 
 1. Add game levels
 2. Maybe give tetrominos they own data file.
+
+### TO TAKE CARE OF:
+1. Every time when clicking pause the next tetrimino is changed.
+2. When rotating tetrimino at the edge they've got split.
+
