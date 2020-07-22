@@ -154,8 +154,9 @@ document.addEventListener('DOMContentLoaded', ()=> {
 
     }
 
-
-    //freeze function, this function stops currently going tetrimino when it meets the bottom or another tetrimino, create new tetrimino and make it go down
+    //FREEZE IS A MAIN GAME FUNCTION
+    //freeze function, this function stops currently going tetrimino when it meets the bottom or another tetrimino,
+    // create new tetrimino and make it go down, shows next tetrimino, count score
 
     function freeze(){
         if(current.some(index => squares[currentPosition + index + width].classList.contains('taken'))){ //checking if the logic is true to some items in an array
@@ -170,6 +171,7 @@ document.addEventListener('DOMContentLoaded', ()=> {
             draw();
             displayNext();
             addScore();
+            gameOver();
         }
     }
 
@@ -241,7 +243,7 @@ document.addEventListener('DOMContentLoaded', ()=> {
             displaySquares[displayIndex + index].classList.add('tetrimino');
         });
     }
-    //function add score
+    //function add score and remove complete rows
 
     function addScore(){
         for(let i =0; i<199; i+=width){
@@ -263,7 +265,13 @@ document.addEventListener('DOMContentLoaded', ()=> {
         }
     }
 
-    //function for removing complete rows
+    //GAME OVER
+    function gameOver(){
+        if(current.some(index => squares[currentPosition + index].classList.contains('taken'))){
+            scoreDisplay.innerText = 'GAME OVER';
+            clearInterval(timerId);
+        }
+    }
 
     //EVENT LISTENERS
 

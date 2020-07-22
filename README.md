@@ -14,7 +14,7 @@ More changes:
 
 ### TO DO: 
 1. Add game levels
-2. Maybe give tetrominos they own data file.
+2. Take care of this strange start button to get start screen overlay.
 
 ### TO TAKE CARE OF:
 1. Every time when clicking pause the next tetrimino is changed, I'm not sure it should even be a pause button...
