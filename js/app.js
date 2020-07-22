@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', ()=> {
     const width = 10;
     let nextRandomTetrimino = 0;
     let timerId = 0;
+    let score = 0;
 
 
     //selecting DOM elements
@@ -14,7 +15,7 @@ document.addEventListener('DOMContentLoaded', ()=> {
     const layout = document.getElementById('layout');
     const miniLayout = document.getElementById('mini-layout');
     const grid = document.querySelector('.grid');
-    const score = document.getElementById('score');
+    const scoreDisplay = document.getElementById('score');
     const startBtn = document.getElementById('start-btn');
 
     //the tetriminos
@@ -168,6 +169,7 @@ document.addEventListener('DOMContentLoaded', ()=> {
             //draw a tetrimino
             draw();
             displayNext();
+            addScore();
         }
     }
 
@@ -239,8 +241,30 @@ document.addEventListener('DOMContentLoaded', ()=> {
             displaySquares[displayIndex + index].classList.add('tetrimino');
         });
     }
+    //function add score
 
-    //function that adds functionality to start/stop button
+    function addScore(){
+        for(let i =0; i<199; i+=width){
+            //defining what's row
+            const row = [i, i+1, i+2, i+3, i+4, i+5, i+6, i+7, i+8, i+9];
+            //checks if all squares in a row are taken
+            if(row.every(index=> squares[index].classList.contains('taken'))){
+                score +=10;
+                scoreDisplay.innerHTML = score;
+                row.forEach(index => {
+                    squares[index].classList.remove('taken');
+                });
+            const removeSquare = squares.splice(i, width);
+            console.log(removeSquare);
+            }
+        }
+    }
+
+    //function for removing complete rows
+
+    //EVENT LISTENERS
+
+    //event listener that adds functionality to start/stop button
     startBtn.addEventListener('click', () => {
         if(timerId){
             clearInterval(timerId);
