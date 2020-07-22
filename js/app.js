@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', ()=> {
     }
 
     //create all squares array after they are append to DOM
-    const squares = Array.from(document.querySelectorAll('.grid div'));
+    let squares = Array.from(document.querySelectorAll('.grid div'));
     console.log(squares);
 
     //GAME
@@ -253,9 +253,12 @@ document.addEventListener('DOMContentLoaded', ()=> {
                 scoreDisplay.innerHTML = score;
                 row.forEach(index => {
                     squares[index].classList.remove('taken');
+                    squares[index].classList.remove('tetrimino');
                 });
-            const removeSquare = squares.splice(i, width);
-            console.log(removeSquare);
+            const removedSquares = squares.splice(i, width);
+            //console.log(removeSquare);
+            squares = removedSquares.concat(squares);
+            squares.forEach(cell => grid.appendChild(cell));
             }
         }
     }
