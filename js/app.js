@@ -8,6 +8,9 @@ document.addEventListener('DOMContentLoaded', ()=> {
     let nextRandomTetrimino = 0;
     let timerId = 0;
     let score = 0;
+    const colors = [
+        '#5CD1FF', '#FF478E', '#FF6933', '#FFE900', '#E7FF5C', '#FA003F', '#AAFAC8'
+    ];
 
 
     //selecting DOM elements
@@ -82,6 +85,7 @@ document.addEventListener('DOMContentLoaded', ()=> {
     for(let i = 0; i<10; i++){
         divForOneBox = document.createElement('div');
         divForOneBox.classList.add('taken');
+        divForOneBox.classList.add('top-border');
         layout.appendChild(divForOneBox);
         // console.log('One box');
     }
@@ -110,6 +114,7 @@ document.addEventListener('DOMContentLoaded', ()=> {
     function draw(){
         current.forEach( index => {
             squares[currentPosition + index].classList.add('tetrimino');
+            squares[currentPosition + index].style.backgroundColor = colors[randomTetrimino];
         });
     }
 
@@ -118,6 +123,7 @@ document.addEventListener('DOMContentLoaded', ()=> {
     function undraw(){
         current.forEach( index => {
             squares[currentPosition + index].classList.remove('tetrimino');
+            squares[currentPosition + index].style.backgroundColor = '';
         });
     }
 
@@ -238,9 +244,11 @@ document.addEventListener('DOMContentLoaded', ()=> {
         //remove tetrimino class from squares in the grid
         displaySquares.forEach(square => {
             square.classList.remove('tetrimino');
+            square.style.backgroundColor = '';
         });
         nextTetriminos[nextRandomTetrimino].forEach(index=> {
             displaySquares[displayIndex + index].classList.add('tetrimino');
+            displaySquares[displayIndex + index].style.backgroundColor = colors[nextRandomTetrimino];
         });
     }
     //function add score and remove complete rows
@@ -256,6 +264,7 @@ document.addEventListener('DOMContentLoaded', ()=> {
                 row.forEach(index => {
                     squares[index].classList.remove('taken');
                     squares[index].classList.remove('tetrimino');
+                    squares[index].style.backgroundColor = '';
                 });
             const removedSquares = squares.splice(i, width);
             //console.log(removeSquare);

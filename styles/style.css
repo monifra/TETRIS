@@ -1,12 +1,41 @@
+@import url('https://fonts.googleapis.com/css?family=Nunito|Roboto+Mono|Kulim+Park');
+
+body {
+    /*background-image: radial-gradient(circle, #eeff8b, #f0ff98, #f2ffa5, #f4ffb2, #f6ffbe);*/
+    background-image: radial-gradient(circle, #ff9671, #ffa07e, #ffa98a, #ffb397, #ffbca4);
+    /*background-image: radial-gradient(circle, #0081cf, #358dce, #5298cc, #6ca3ca, #85aec8);*/
+    font-family: 'Roboto Mono', sans-serif;
+    color: white;
+}
+
+h1 {
+    text-align: center;
+}
+
 .container{
     display: flex;
+    justify-content: center;
+    align-items: baseline;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
 }
+
+.top-border{
+    border-top-style: solid;
+    border-top-color: #ffbca4;
+}
+
 .grid {
     width: 200px;
     height: 400px;
     display: flex;
     flex-wrap: wrap;
-    background-color: greenyellow;
+    /*background-color: #ffb397;*/
+
 }
 
 .grid div {
@@ -19,15 +48,21 @@
 }
 
 .mini-grid {
-    margin-left: 60px;
+    margin-left: 150px;
     width: 80px;
     height: 80px;
     display: flex;
     flex-wrap: wrap;
-    background-color: mediumslateblue;
+    /*background-color: #ffb397;*/
 }
 
 .mini-grid div {
     width: 20px;
     height: 20px;
 }
+
+/*.score {*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+
+/*}*/
