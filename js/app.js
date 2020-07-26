@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', ()=> {
     const grid = document.querySelector('.grid');
     const scoreDisplay = document.getElementById('score');
     const startBtn = document.getElementById('start-btn');
+    const overlay = document.querySelector('overlay');
 
     //the tetriminos
 
@@ -291,6 +292,8 @@ document.addEventListener('DOMContentLoaded', ()=> {
             timerId = null;
             startBtn.textContent = 'START';
         } else {
+            // overlay.classList.remove('overlay');
+            // overlay.style.display = 'none';
             draw();
             timerId = setInterval(moveDown, 1000);
             nextRandomTetrimino = Math.floor(Math.random()* theTetriminos.length);
